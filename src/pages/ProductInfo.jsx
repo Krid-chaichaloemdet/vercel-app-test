@@ -11,16 +11,21 @@ import axios from "axios";
 export default function ProductInfo() {
   const { productInfo, subProductInfo, handleInfoBackToHome } = useAuth();
   const [changePic, setChangePic] = useState({ target: 0 });
-  const [isOn, setIsOn] = useState(false);
+  const [isOn, setIsOn] = useState(subProductInfo.status);
   const [status, setStatus] = useState({ status: "true" });
 
-const [isShowAll , setIsShowAll] =useState(true)
+  const [isShowAll, setIsShowAll] = useState(true);
 
+  console.log("productInfo", productInfo);
+  console.log("subProductInfo", subProductInfo);
+  console.log("handleInfoBackToHome", handleInfoBackToHome);
+
+  
   const navigate = useNavigate();
 
-  const updateInfo = () => {
+  const updateInfo = (data) => {
     axios.post("http://localhost:5566/product/updateProduct", {
-      ...status,
+      data,
       subProductInfo,
     });
   };
@@ -37,7 +42,6 @@ const [isShowAll , setIsShowAll] =useState(true)
   return (
     <div className="flex justify-center">
       <div className="bg-gray-200  rounded-xl w-full flex  gap-2 justify-between p-5  h-[86vh] ">
-    
         <div className=" h-50 w-1/2 bg-gray-300 rounded-lg flex flex-col  items-center  gap-2 justify-center">
           <div className="w-full h-72 flex gap-2 justify-center items-center -translate-y-8">
             <div className=" w-14 h-14 rounded-full flex items-center justify-center  hover:bg-gray-400 ">
@@ -91,15 +95,14 @@ const [isShowAll , setIsShowAll] =useState(true)
           <div className="flex justify-between">
             <div>{subProductInfo.productName}</div>
             <div className="flex gap-5 cursor-pointer ">
-            <BsArrowLeftCircle
-          onClick={() => {
-            handleInfoBackToHome(subProductInfo.pageId);
-            return navigate("/");
-          }}
-          className=" "
-        />
+              <BsArrowLeftCircle
+                onClick={() => {
+                  handleInfoBackToHome(subProductInfo.pageId);
+                  return navigate("/");
+                }}
+                className=" "
+              />
               <FiEdit className="cursor-pointer" />
-
             </div>
           </div>
           <br />
@@ -118,16 +121,40 @@ const [isShowAll , setIsShowAll] =useState(true)
           <div>
             <div className="flex text-2xl">เจ้าของลิขสิทธิ์</div>
             <div className="w-2/3 h-auto p-1 bg-gray-400 m-5 border-2">
-              <div className="text-2xl">Name: {subProductInfo.productOwner}</div>
+              <div className="text-2xl">
+                Name: {subProductInfo.productOwner}
+              </div>
               <div className="text-2xl">Number: {subProductInfo.number}</div>
               <div className="text-2xl">E-mail: {subProductInfo.email}</div>
             </div>
           </div>
           <div className="text-2xl flex gap-2 items-center">
-            {isOn ? (
-              <div className="w-24 ">เเสดง</div>
+            {subProductInfo.status == "เเสดง"  ? (
+              <div>{subProductInfo.status}</div>
             ) : (
-              <div className="w-24 ">ไม่เเสดง</div>
+              <div>{subProductInfo.status}</div>
+            )}
+
+            {isOn === "เเสดง" ? (
+              <LiaToggleOnSolid
+                onClick={() => {
+                    setIsOn("ไม่เเสดง")
+                  updateInfo({ status: "false" });
+                }}
+              />
+            ) : (
+              <LiaToggleOffSolid
+                onClick={() => {
+                    
+                    setIsOn("เเสดง")
+                  updateInfo({ status: "true" });
+                }}
+              />
+            )}
+            {/* {isOn ? (
+              <div className="w-24 ">{subProductInfo.status}</div>
+            ) : (
+              <div className="w-24 ">{subProductInfo.status == "เเสดง" ? "เเสดง": "asd"}</div>
             )}
             <div className="flex items-center">
               {isOn ? (
@@ -153,20 +180,35 @@ const [isShowAll , setIsShowAll] =useState(true)
                   />
                 </div>
               )}
-            </div>
+            </div> */}
           </div>
           <div className="text-2xl">
             <div>รายละเอียด</div>
-            <div className={`w-1/2 h-20   text-lg ${isShowAll ? "overflow-hidden " : ""}`  }>
+            <div
+              className={`w-1/2 h-20   text-lg ${
+                isShowAll ? "overflow-hidden " : ""
+              }`}
+            >
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat
               consectetur deserunt aperiam maxime deleniti, ratione esse quia
               officia laboriosam rem exercitationem non facilis animi
               voluptatem?
             </div>
-             {isShowAll ?  <div className="absolute w-40 text-lg mx-80 translate-x-5 -my-6 cursor-pointer" onClick={()=>setIsShowAll(!isShowAll)}>...อ่านเพิ่มเติม</div>: 
-              <div 
-              className="absolute my-8 mx-48 translate-x-2 text-lg cursor-pointer"
-              onClick={()=>setIsShowAll(!isShowAll)}>...ย่อเล็กลง</div>}
+            {isShowAll ? (
+              <div
+                className="absolute w-40 text-lg mx-80 translate-x-5 -my-6 cursor-pointer"
+                onClick={() => setIsShowAll(!isShowAll)}
+              >
+                ...อ่านเพิ่มเติม
+              </div>
+            ) : (
+              <div
+                className="absolute my-8 mx-48 translate-x-2 text-lg cursor-pointer"
+                onClick={() => setIsShowAll(!isShowAll)}
+              >
+                ...ย่อเล็กลง
+              </div>
+            )}
           </div>
         </div>
       </div>

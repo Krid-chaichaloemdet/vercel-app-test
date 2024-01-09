@@ -15,51 +15,45 @@ export default function Home() {
   const { handleInfo, dataInfoToHome } = useAuth();
   const [deleteAll, setDeleteAll] = useState(false);
 
-  const [isOpenCreateProduct, setIsOpenCreateProduct] = useState(false);
+  // const [isOpenCreateProduct, setIsOpenCreateProduct] = useState(false);
   const [displayProduct, setDisplayProduct] = useState(null);
 
   const [selectPage, setSelectPage] = useState({
     page: 1,
   });
   let classes = "text-white bg-gray-400 ";
-  console.log(dataInfoToHome)
-  // if(dataInfoToHome == 1){
-  //   setSelectPage({ ...selectPage, page: 1 })
-  // }
-  // if(dataInfoToHome == 2){
-  //   setSelectPage({ ...selectPage, page: 2 })
-  // }
-  // if(dataInfoToHome == 3){
-  //   setSelectPage({ ...selectPage, page: 3 })
-  // }
+  console.log(dataInfoToHome);
+  
   useEffect(() => {
-    // if(dataInfoToHome == 2){
-    //   return setSelectPage({ ...selectPage, page: 2 })
-    // }
     axios
-      .post("http://localhost:5566/product/readProduct", selectPage)
-      .then((res) => {
-        console.log(res.data);
-        setDisplayProduct(res.data);
-      });
+    .post("http://localhost:5566/product/readProduct", selectPage)
+    .then((res) => {
+      setDisplayProduct(res.data);
+    });
   }, [selectPage]);
+  useEffect(() => {
+    if(dataInfoToHome){
 
+      setSelectPage({ ...selectPage, page: dataInfoToHome });
+    }
+  }, []);
   return (
     <>
       <div className="text-2xl bg-white h-5/6 rounded-xl">
         <div className="flex gap-2 p-5 items-center">
           <div>
-            <CiHome />
+            <CiHome className="text-4xl" />
           </div>
-          <div>หน้าหลัก</div>
+          <div className="text-4xl">หน้าหลัก</div>
         </div>
-        <div className="p-5 text-lg">รายการผลงาน </div>
 
-        <div className="bg-gray-100 h-3/5 rounded-md shadow-2xl m-5">
+        <div className="bg-gray-100 h-3/5 rounded-md shadow-2xl m-14 -translate-y-16">
           <div className="flex  justify-between">
             <div className="flex text-lg gap-2 m-5 items-center">
               <div
-                onClick={() => navigate("createProduct")}
+                onClick={() => {
+                  handleInfo(selectPage)
+                return navigate("createProduct")}}
                 className="bg-white border-2 h-10 w-10 text-white text-xl items-center flex justify-center rounded-md cursor-pointer hover:bg-gray-200"
               >
                 <FcPlus />
@@ -78,7 +72,10 @@ export default function Home() {
               >
                 <GrPowerReset />
               </div>
-              <div className="text-2xl font-extrabold"> PAGE : {selectPage.page}</div>
+              <div className="text-2xl font-extrabold">
+                {" "}
+                PAGE : {selectPage.page}
+              </div>
             </div>
             <div className=" flex text-lg gap-2 m-5">
               <div className="h-10 w-10 border-2 flex items-center justify-center  rounded-md shadow-lg cursor-pointer hover:bg-gray-200">
@@ -112,7 +109,6 @@ export default function Home() {
                 {displayProduct?.map((el, i) => {
                   return (
                     <tr
-                
                       className="cursor-pointer text-sm  hover:bg-gray-200"
                       key={i}
                     >
@@ -125,22 +121,33 @@ export default function Home() {
                       </th>
                       <th>{el.productName}</th>
                       <th>{el.productCat}</th>
-                      <th>{el.displayDate}</th>
-                      <th>{el.expireDate}</th>
+                      <th>{el.status == "เเสดง" ? el.displayDate : "---"}</th>
+                      <th>{el.status == "เเสดง" ? el.expireDate : "---"}</th>
                       <th>
-                          <div className="flex gap-2  items-center ">
-                            <div>    <AiOutlineCheckSquare className={`${el.status == "เเสดง" ? "text-green-700" : "text-red-700"} text-xl` } /></div>
-                            <div>{el.status}</div>
+                        <div className="flex gap-2  items-center ">
+                          <div>
+                            {" "}
+                          {el.status  =="เเสดง" ?  <AiOutlineCheckSquare
+                              className="text-xl text-green-500"
+                            />  :
+                                <AiOutlineCloseSquare className="text-xl text-red-500"/>}
                           </div>
+                          <div >{el.status}</div>
+                        </div>
                       </th>
                       <th
-                            onClick={() => {
-                              handleInfo({...el, displayProduct,pageId : selectPage.page});
-                              return navigate("info");
-                            }}
-                      className=" p-5">
+                        onClick={() => {
+                          handleInfo({
+                            ...el,
+                            displayProduct,
+                            pageId: selectPage.page,
+                          });
+                          return navigate("info");
+                        }}
+                        className=" p-5"
+                      >
                         <div className="flex items-center gap-2">
-                          <MdOutlineRemoveRedEye className="hover:text-xl"/>
+                          <MdOutlineRemoveRedEye className="hover:text-xl" />
                           <div>รายละเอียด</div>
                         </div>
                       </th>
