@@ -42,7 +42,7 @@ export default function ProductInfo() {
   return (
     <div className="flex justify-center">
       <div className="bg-gray-200  rounded-xl w-full flex  gap-2 justify-between p-5  h-[86vh] ">
-        <div className=" h-50 w-1/2 bg-gray-300 rounded-lg flex flex-col  items-center  gap-2 justify-center">
+        <div className=" h-50 w-1/2 bg-gray-100 rounded-lg flex flex-col shadow-2xl items-center  gap-2 justify-center">
           <div className="w-full h-72 flex gap-2 justify-center items-center -translate-y-8">
             <div className=" w-14 h-14 rounded-full flex items-center justify-center  hover:bg-gray-400 ">
               <IoIosArrowBack
@@ -57,7 +57,7 @@ export default function ProductInfo() {
                     productInfo[changePic.target]?.productPic
                   })`,
                 }}
-                className="w-96 h-56 rounded-md bg-cover bg-center duration-500"
+                className="w-96 h-56 rounded-md bg-cover bg-center duration-500 shadow-2xl"
               ></div>
             </div>
             <div className=" w-14 h-14 rounded-full flex items-center justify-center  hover:bg-gray-400 ">
@@ -90,7 +90,7 @@ export default function ProductInfo() {
             ratione natus.
           </div>
         </div>
-        <div className=" h-50 w-1/2 bg-gray-300">
+        <div className=" h-50 w-1/2 bg-gray-100 rounded-md shadow-2xl">
           <div className="flex justify-between m-2">
             <div className="text-4xl">{subProductInfo.productName}</div>
             <div className="flex gap-5 cursor-pointer  ">
@@ -111,11 +111,11 @@ export default function ProductInfo() {
           </div>
           <div className="flex text-2xl m-2">
             <div>วันที่เริ่มต้น</div>
-            <div>: {subProductInfo.displayDate}</div>
+            <div>: {subProductInfo.status == "เเสดง" ? subProductInfo.displayDate : "---"}</div>
           </div>
           <div className="flex text-2xl m-2">
             <div>วันที่สินสุดการเเสดง</div>
-            <div>: {subProductInfo.expireDate}</div>
+            <div>: {subProductInfo.status == "เเสดง" ? subProductInfo.expireDate : "---"}</div>
           </div>
           <div>
             <div className="flex text-2xl m-2">เจ้าของลิขสิทธิ์</div>
