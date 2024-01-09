@@ -51,7 +51,6 @@ export default function ProductInfo() {
               />
             </div>
             <div>
-              {/* <img src={productInfo[changePic.target]?.productPic} className="w-96 h-56 rounded-md bg-cover bg-center duration-500" alt="" /> */}
               <div
                 style={{
                   backgroundImage: `url(${
@@ -92,43 +91,43 @@ export default function ProductInfo() {
           </div>
         </div>
         <div className=" h-50 w-1/2 bg-gray-300">
-          <div className="flex justify-between">
-            <div>{subProductInfo.productName}</div>
-            <div className="flex gap-5 cursor-pointer ">
+          <div className="flex justify-between m-2">
+            <div className="text-4xl">{subProductInfo.productName}</div>
+            <div className="flex gap-5 cursor-pointer  ">
               <BsArrowLeftCircle
                 onClick={() => {
                   handleInfoBackToHome(subProductInfo.pageId);
                   return navigate("/");
                 }}
-                className=" "
+                className="text-4xl"
               />
-              <FiEdit className="cursor-pointer" />
+              <FiEdit className=" text-4xl" />
             </div>
           </div>
-          <br />
-          <div className="flex text-2xl">
+       
+          <div className="flex text-2xl m-2">
             <div>ประเภทผลงาน</div>
             <div>: {subProductInfo.productCat}</div>
           </div>
-          <div className="flex text-2xl">
+          <div className="flex text-2xl m-2">
             <div>วันที่เริ่มต้น</div>
             <div>: {subProductInfo.displayDate}</div>
           </div>
-          <div className="flex text-2xl">
+          <div className="flex text-2xl m-2">
             <div>วันที่สินสุดการเเสดง</div>
             <div>: {subProductInfo.expireDate}</div>
           </div>
           <div>
-            <div className="flex text-2xl">เจ้าของลิขสิทธิ์</div>
-            <div className="w-2/3 h-auto p-1 bg-gray-400 m-5 border-2">
-              <div className="text-2xl">
-                Name: {subProductInfo.productOwner}
+            <div className="flex text-2xl m-2">เจ้าของลิขสิทธิ์</div>
+            <div className="w-2/3 h-auto p-1 m-5 border-2 border-solid border-gray-500 rounded-md">
+              <div className="text-2xl m-">
+                Name : {subProductInfo.productOwner}
               </div>
-              <div className="text-2xl">Number: {subProductInfo.number}</div>
-              <div className="text-2xl">E-mail: {subProductInfo.email}</div>
+              <div className="text-2xl">Number : {subProductInfo.number}</div>
+              <div className="text-2xl">E-mail : {subProductInfo.email}</div>
             </div>
           </div>
-          <div className="text-2xl flex gap-2 items-center">
+          <div className="text-2xl flex gap-2 items-center m-2">
             {subProductInfo.status == "เเสดง"  ? (
               <div>{subProductInfo.status}</div>
             ) : (
@@ -137,6 +136,7 @@ export default function ProductInfo() {
 
             {isOn === "เเสดง" ? (
               <LiaToggleOnSolid
+              className="cursor-pointer text-2xl"
                 onClick={() => {
                     setIsOn("ไม่เเสดง")
                   updateInfo({ status: "false" });
@@ -144,6 +144,7 @@ export default function ProductInfo() {
               />
             ) : (
               <LiaToggleOffSolid
+              className="cursor-pointer text-2xl"
                 onClick={() => {
                     
                     setIsOn("เเสดง")
@@ -151,38 +152,9 @@ export default function ProductInfo() {
                 }}
               />
             )}
-            {/* {isOn ? (
-              <div className="w-24 ">{subProductInfo.status}</div>
-            ) : (
-              <div className="w-24 ">{subProductInfo.status == "เเสดง" ? "เเสดง": "asd"}</div>
-            )}
-            <div className="flex items-center">
-              {isOn ? (
-                <div>
-                  <LiaToggleOnSolid
-                    className="cursor-pointer"
-                    onClick={() => {
-                      updateInfo();
-                      setStatus({ ...status, status: "true" });
-                      setIsOn(!isOn);
-                    }}
-                  />
-                </div>
-              ) : (
-                <div>
-                  <LiaToggleOffSolid
-                    onClick={() => {
-                      updateInfo();
-                      setStatus({ ...status, status: "false" });
-                      setIsOn(!isOn);
-                    }}
-                    className="cursor-pointer"
-                  />
-                </div>
-              )}
-            </div> */}
+          
           </div>
-          <div className="text-2xl">
+          <div className="text-2xl m-2">
             <div>รายละเอียด</div>
             <div
               className={`w-1/2 h-20   text-lg ${

@@ -21,19 +21,18 @@ export default function Home() {
   const [selectPage, setSelectPage] = useState({
     page: 1,
   });
-  let classes = "text-white bg-gray-400 ";
+  let classes = "text-white bg-gray-500 p-1 rounded-sm ";
   console.log(dataInfoToHome);
-  
+
   useEffect(() => {
     axios
-    .post("http://localhost:5566/product/readProduct", selectPage)
-    .then((res) => {
-      setDisplayProduct(res.data);
-    });
+      .post("http://localhost:5566/product/readProduct", selectPage)
+      .then((res) => {
+        setDisplayProduct(res.data);
+      });
   }, [selectPage]);
   useEffect(() => {
-    if(dataInfoToHome){
-
+    if (dataInfoToHome) {
       setSelectPage({ ...selectPage, page: dataInfoToHome });
     }
   }, []);
@@ -44,7 +43,7 @@ export default function Home() {
           <div>
             <CiHome className="text-4xl" />
           </div>
-          <div className="text-4xl">หน้าหลัก</div>
+          <div className="text-3xl">หน้าหลัก</div>
         </div>
 
         <div className="bg-gray-100 h-3/5 rounded-md shadow-2xl m-14 -translate-y-16">
@@ -52,8 +51,9 @@ export default function Home() {
             <div className="flex text-lg gap-2 m-5 items-center">
               <div
                 onClick={() => {
-                  handleInfo(selectPage)
-                return navigate("createProduct")}}
+                  handleInfo(selectPage);
+                  return navigate("createProduct");
+                }}
                 className="bg-white border-2 h-10 w-10 text-white text-xl items-center flex justify-center rounded-md cursor-pointer hover:bg-gray-200"
               >
                 <FcPlus />
@@ -72,10 +72,7 @@ export default function Home() {
               >
                 <GrPowerReset />
               </div>
-              <div className="text-2xl font-extrabold">
-                {" "}
-                PAGE : {selectPage.page}
-              </div>
+              <div className="text-xl "> PAGE : {selectPage.page}</div>
             </div>
             <div className=" flex text-lg gap-2 m-5">
               <div className="h-10 w-10 border-2 flex items-center justify-center  rounded-md shadow-lg cursor-pointer hover:bg-gray-200">
@@ -127,12 +124,13 @@ export default function Home() {
                         <div className="flex gap-2  items-center ">
                           <div>
                             {" "}
-                          {el.status  =="เเสดง" ?  <AiOutlineCheckSquare
-                              className="text-xl text-green-500"
-                            />  :
-                                <AiOutlineCloseSquare className="text-xl text-red-500"/>}
+                            {el.status == "เเสดง" ? (
+                              <AiOutlineCheckSquare className="text-xl text-green-500" />
+                            ) : (
+                              <AiOutlineCloseSquare className="text-xl text-red-500" />
+                            )}
                           </div>
-                          <div >{el.status}</div>
+                          <div>{el.status}</div>
                         </div>
                       </th>
                       <th
@@ -154,31 +152,6 @@ export default function Home() {
                     </tr>
                   );
                 })}
-                {/* <tr>
-                <th className=" p-5">
-                  {deleteAll === true ? (
-                    <input className="w-5 h-5" type="checkbox" checked />
-                  ) : (
-                    <input className="w-5 h-5" type="checkbox" />
-                  )}
-                </th>
-                <th className=" p-5">อาจารย์เเดง</th>
-                <th className=" p-5">ธรรมะสอนใจ</th>
-                <th className=" p-5">12/5/2023</th>
-                <th className=" p-5">12/9/2023</th>
-                <th className=" p-5">
-                  <div className="flex items-center gap-2">
-                    <AiOutlineCheckSquare className="text-green-600" />
-                    <div>เเสดง</div>
-                  </div>
-                </th>
-                <th className=" p-5">
-                  <div className="flex items-center gap-2">
-                    <MdOutlineRemoveRedEye />
-                    <div>รายละเอียด</div>
-                  </div>
-                </th>
-              </tr> */}
               </thead>
             </table>
           </div>
@@ -187,7 +160,7 @@ export default function Home() {
               <div>Page Size</div>
               <div> 3 </div>
             </div>
-            <div className="flex gap-5 ">
+            <div className="flex gap-5 -my-4  h-8 ">
               <div
                 className={`${
                   selectPage.page == 1 ? classes : ""
